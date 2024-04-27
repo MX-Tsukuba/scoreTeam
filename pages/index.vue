@@ -1,3 +1,39 @@
+<template>
+  <div>
+    <h1>MX-App</h1>
+
+    <div>
+      <p>
+        enter golf course info.
+        <input type="text" placeholder="course" v-model="playdata.course">
+      </p>      
+    </div>    
+
+    <h2>{{ playdata.course }} course's Scores</h2>
+    <ul v-if = "t_sample_kazuki && t_sample_kazuki.length">
+      <li v-for = "sample in t_sample_kazuki" :key="sample.id">
+        <p>H{{ sample.hole || "-" }}, par</p>
+        <div>
+          score: {{ sample.score }}, putts: {{ sample.putts }}
+          <button @click="deletePlayData(sample.id)">x</button>
+        </div> 
+      </li>    
+    </ul>
+    <p v-else>Loading..</p>
+
+    <div>
+      <h3>Input</h3>
+      <form @submit="addPlayData">
+        Hole: <input type="number" v-model="playdata.hole">,
+        Score: <input type="number" v-model="playdata.score">,
+        Putts: <input type="number" v-model="playdata.putts">,
+        <button type="submit">Add play data</button>
+      </form>
+    </div>
+    
+  </div>
+</template>
+
 <script setup lang="ts">
 import {type Database} from '~/types/database.types';
 const supabase = useSupabaseClient<Database>();
@@ -36,31 +72,3 @@ const deletePlayData = async(tableId: number)=> {
   }
 };
 </script>
-
-<template>
-  <div>
-    <h1>MX-App</h1>
-
-    <div>
-      <p>enter golf course info.
-        <input type="text" placeholder="course" v-model="playdata.course">
-      </p>      
-    </div>    
-
-    <h2>{{ playdata.course }} course's Scores</h2>
-    <ul v-if = "t_sample_kazuki && t_sample_kazuki.length">
-      <li v-for = "sample in t_sample_kazuki" :key="sample.id">
-        hole: {{ sample.hole||"no data" }}, score: {{ sample.score }}, putts: {{ sample.putts }}
-        <button @click="deletePlayData(sample.id)">x</button> 
-      </li>    
-    </ul>
-    <p v-else>Loading..</p>
-
-    <form @submit="addPlayData">
-      <input type="hole" placeholder="hole" v-model="playdata.hole">
-      <input type="number" placeholder="Score" v-model="playdata.score">
-      <input type="number" placeholder="Putts" v-model="playdata.putts">
-      <button type="submit">Add play data</button>
-    </form>
-  </div>
-</template>
