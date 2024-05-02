@@ -1,13 +1,7 @@
+<!-- 以前のコードほぼそのままなので上手く調節してください -->
 <template>
+  <EnterGolfCourseName/>
   <div>
-    <h1>MX-App</h1>
-
-    <div>
-      <p>
-        enter golf course info.
-        <input type="text" placeholder="course" v-model="playdata.course">
-      </p>      
-    </div>    
 
     <h2>{{ playdata.course }} course's Scores</h2>
     <ul v-if = "t_sample_kazuki && t_sample_kazuki.length">
@@ -35,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import EnterGolfCourseName from './enterGolfCourseName.vue';
 import {type Database} from '~/types/database.types';
 const supabase = useSupabaseClient<Database>();
 

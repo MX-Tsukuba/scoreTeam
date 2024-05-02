@@ -1,0 +1,3 @@
+<template>
+  scoreDisplay Page
+</template>
