@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   supabase:{
     redirect:false
   },
-  router: {
-    base: `/top`,
-  },
+  // router: {
+  //   base: `/top`,
+  // },
 })
