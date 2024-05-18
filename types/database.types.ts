@@ -86,6 +86,111 @@ export type Database = {
         Relationships: []
       }
     }
+    t_holes: {
+      Row: {
+        created_at: string | null
+        id: number
+        holeNumber: number | null
+        scoreNumber: number | null
+        puttsNumber: number | null
+        round_id: number | null
+        updated_at: string | null
+      }
+      Insert: {
+        created_at?: string | null
+        id?: never
+        holeNumber?: number | null
+        scoreNumber?: number | null
+        puttsNumber?: number | null
+        round_id?: number | null
+        updated_at?: string | null
+      }
+      Update: {
+        created_at?: string | null
+        id?: never
+        holeNumber?: number | null
+        scoreNumber?: number | null
+        puttsNumber?: number | null
+        round_id?: number | null
+        updated_at?: string | null
+      }
+      Relationships: []
+    }
+  m_golfPlaces: {
+    Row: {
+      created_at: string | null
+      id: number
+      golfPlaceName: string | null
+      par_1H: string | null
+      par_2H: string | null
+      par_3H: string | null
+      par_4H: string | null
+      par_5H: string | null
+      par_6H: string | null
+      par_7H: string | null
+      par_8H: string | null
+      par_9H: string | null
+      par_10H: string | null
+      par_11H: string | null
+      par_12H: string | null
+      par_13H: string | null
+      par_14H: string | null
+      par_15H: string | null
+      par_16H: string | null
+      par_17H: string | null
+      par_18H: string | null
+      updated_at: string | null
+    }
+    Insert: {
+      created_at?: string | null
+      id?: never
+      golfPlaceName?: string | null
+      par_1H?: number | null
+      par_2H?: number | null
+      par_3H?: number | null
+      par_4H?: number | null
+      par_5H?: number | null
+      par_6H?: number | null
+      par_7H?: number | null
+      par_8H?: number | null
+      par_9H?: number | null
+      par_10H?: number | null
+      par_11H?: number | null
+      par_12H?: number | null
+      par_13H?: number | null
+      par_14H?: number | null
+      par_15H?: number | null
+      par_16H?: number | null
+      par_17H?: number | null
+      par_18H?: number | null
+      updated_at?: string | null
+    }
+    Update: {
+      created_at?: string | null
+      id?: never
+      golfPlaceName?: string | null
+      par_1H?: number | null
+      par_2H?: number | null
+      par_3H?: number | null
+      par_4H?: number | null
+      par_5H?: number | null
+      par_6H?: number | null
+      par_7H?: number | null
+      par_8H?: number | null
+      par_9H?: number | null
+      par_10H?: number | null
+      par_11H?: number | null
+      par_12H?: number | null
+      par_13H?: number | null
+      par_14H?: number | null
+      par_15H?: number | null
+      par_16H?: number | null
+      par_17H?: number | null
+      par_18H?: number | null
+      updated_at?: string | null
+    }
+    Relationships: []
+  }
     Views: {
       [_ in never]: never
     }
