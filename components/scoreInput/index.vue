@@ -1,4 +1,4 @@
-<!-- 以前のコードほぼそのままなので上手く調節してください -->
+<!-- 途中 -->
 <template>
   <EnterGolfCourseName />
   <section class="scoreInputWhole">
@@ -10,8 +10,8 @@
       <hr class="SISHborder"/>
     </div>
     <div class="SIsearchHole" >
-    <ul v-for="i in 18">
-      <li class="SIbox">{{ i }}H</li>
+    <ul class="SIBoxes">
+      <li  v-for="(item, index) in items" :key="index" class="SIbox" v-show="isItemVisible(index)">{{ item }}H</li>
     </ul>
       <p class="SIleftButton" @click="moveLeft"> < </p>
       <p class="SIrightButton" @click="moveRight"> > </p>
@@ -21,14 +21,14 @@
         <div>
         <p class="scoreScore">スコア</p>
         <div>
-          <input type="number" class="SInum" v-model="playdata.score">
+          <input type="number" class="SInum" v-model="playData.scoreNumber">
           <img>
         </div>
       </div>
       <div>
         <p class="scoreScore">パット数</p>
         <div>
-          <input type="number"  class="SInum" v-model="playdata.putts">
+          <input type="number"  class="SInum" v-model="playData.puttsNumber">
           <img>
         </div>
       </div>
@@ -58,6 +58,7 @@
 
 <script setup lang="ts">
 import EnterGolfCourseName from './enterGolfCourseName.vue';
+import { ref, reactive } from 'vue';
 import { type Database } from '~/types/database.types';
 const supabase = useSupabaseClient<Database>();
 
@@ -67,16 +68,14 @@ const { data: m_golfPlaces } = await useAsyncData(async () => {
   return data;
 });
 
-const playdata = reactive({
-  putts: 0,
-  course: '',
-  score: 0,
-  hole: 0,
+const playData = reactive({
+  scoreNumber: 0,
+  puttsNumber: 0,
 });
 
 //データ挿入
 const addPlayData = async () => {
-  const { error } = await supabase.from('m_golfPlaces').insert(playdata);
+  const { error } = await supabase.from('t_holes').insert(playData);
   if (error) {
     alert(error.message);
   } else {
@@ -84,11 +83,29 @@ const addPlayData = async () => {
   }
 };
 
-const moveLeft = ()=>{  
-};
+//ホール選択
+const items = Array.from({ length: 18 }, (_, i) => i + 1);
+const currentCardIndex = ref(5);
 
-const moveRight = ()=>{  
-};
+const moveLeft = () =>{
+  currentCardIndex.value -= 5;
+  if (currentCardIndex.value <= 3) {
+    currentCardIndex.value = 5; // 最終的な表示範囲をリセット
+  }
+}
+
+const moveRight = () =>{
+  currentCardIndex.value += 5;
+  if (currentCardIndex.value > 15) {
+    currentCardIndex.value = 18; // 最終的な表示範囲をリセット
+  }
+}
+
+const isItemVisible = (index:number)=> {
+  const start = Math.max(0, currentCardIndex.value - 5);
+  const end = Math.min(items.length, currentCardIndex.value);
+  return index >= start && index < end;
+}
 </script>
 
 <style scoped>
@@ -139,8 +156,14 @@ align-items: flex-end;
 gap: 10px;
   overflow: hidden;
 }
+
+.SIBoxes{
+  display: flex;
+  gap: 8px;
+}
+
 .SIbox{
-  width: 88px;
+  width: 72px;
   height: 56px;
   display: flex;
 justify-content: center;

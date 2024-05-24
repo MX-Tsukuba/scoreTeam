@@ -85,7 +85,6 @@ export type Database = {
         }
         Relationships: []
       }
-    }
     t_holes: {
       Row: {
         created_at: string | null
@@ -191,6 +190,7 @@ export type Database = {
     }
     Relationships: []
   }
+}
     Views: {
       [_ in never]: never
     }
