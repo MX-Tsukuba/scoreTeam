@@ -1,4 +1,3 @@
-<!-- 途中 -->
 <template>
   <EnterGolfCourseName />
   <section class="scoreInputWhole">
@@ -16,6 +15,7 @@
       <p class="SIleftButton" @click="moveLeft"> < </p>
       <p class="SIrightButton" @click="moveRight"> > </p>
     </div>
+
     <div class="SIchooseNum">
       <div class="SIdata">
         <div>
@@ -32,26 +32,29 @@
           <img>
         </div>
       </div>
-      </div>
-      
+      </div>      
       <div class="SInumberPlate">
         <div class="SInumbers">
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
+          <p @click="selectNumber">1</p>
+          <p @click="selectNumber">2</p>
+          <p @click="selectNumber">3</p>
         </div>
         <div class="SInumbers">
-          <p>4</p>
-          <p>5</p>
-          <p>6</p>
+          <p @click="selectNumber">4</p>
+          <p @click="selectNumber">5</p>
+          <p @click="selectNumber">6</p>
         </div>
         <div class="SInumbers">
-          <p>7</p>
-          <p>8</p>
-          <p>9</p>
+          <p @click="selectNumber">7</p>
+          <p @click="selectNumber">8</p>
+          <p @click="selectNumber">9</p>
         </div>
-        <p class="SInumbers">0</p>
+        <p class="SInumbers" @click="selectNumber">0</p>
       </div>
+
+    <div>
+      <p class="SInum" @click="addPlayData">addData</p>
+    </div>
     </div>
   </section>
 </template>
@@ -106,6 +109,14 @@ const isItemVisible = (index:number)=> {
   const end = Math.min(items.length, currentCardIndex.value);
   return index >= start && index < end;
 }
+
+//値選択
+const selectNumber = ()=> {
+  document.querySelector(".SInumberPlate")?.querySelectorAll("p").forEach((event)=>{
+    const clickedText = event.textContent;
+    playData.scoreNumber = Number(clickedText);
+  });
+};
 </script>
 
 <style scoped>
@@ -184,6 +195,7 @@ position: absolute;
 left: 16px;
 bottom: 0px;
 box-shadow: 2px 2px 16px 0px rgba(0, 0, 0, 0.25);
+cursor: pointer;
 }
 .SIrightButton{
   width: 48px;
@@ -197,6 +209,7 @@ position: absolute;
 right: 16px;
 bottom: 0px;
 box-shadow: 2px 2px 16px 0px rgba(0, 0, 0, 0.25);
+cursor: pointer;
 }
 .SIchooseNum{
   display: flex;
@@ -248,5 +261,6 @@ box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
   flex-direction: row;
   gap: 64px;
   margin: 0 auto;
+cursor: pointer;
   }
 </style>
