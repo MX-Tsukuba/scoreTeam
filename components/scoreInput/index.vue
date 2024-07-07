@@ -53,7 +53,7 @@
       </div>
 
     <div>
-      <p class="SInum" @click="addPlayData">addData</p>
+      <p class="SInum addBtn" @click="addPlayData">addData</p>
     </div>
     </div>
   </section>
@@ -263,4 +263,7 @@ box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
 cursor: pointer;
   }
+.addBtn{
+  justify-content: center;
+}
 </style>
