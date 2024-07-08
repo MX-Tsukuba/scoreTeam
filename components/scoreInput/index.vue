@@ -1,16 +1,17 @@
 <template>
   <EnterGolfCourseName />
   <section class="scoreInputWhole">
-    <div class="SIshowHole">
+    <div class="SIshowHole">      
+      <p>{{ golfPlaceName }}</p>
       <div class="SISHtop">
-        <p class="SIhole">10H</p>
-        <p class="SIpar">par5</p>
+        <p class="SIhole">{{ currentHole }}H</p>
+        <p class="SIpar">par{{ par }}</p>
       </div>
       <hr class="SISHborder"/>
     </div>
     <div class="SIsearchHole" >
     <ul class="SIBoxes">
-      <li  v-for="(item, index) in items" :key="index" class="SIbox" v-show="isItemVisible(index)">{{ item }}H</li>
+      <li  v-for="(item, index) in items" :key="index" class="SIbox" v-show="isItemVisible(index)" @click="updateCurrentHole(item)">{{ item }}H</li>
     </ul>
       <p class="SIleftButton" @click="moveLeft"> < </p>
       <p class="SIrightButton" @click="moveRight"> > </p>
@@ -61,20 +62,45 @@
 
 <script setup lang="ts">
 import EnterGolfCourseName from './enterGolfCourseName.vue';
-import { ref, reactive } from 'vue';
-import { type Database } from '~/types/database.types';
-const supabase = useSupabaseClient<Database>();
+import { ref, reactive, watch } from 'vue';
+import type { Database } from '~/types/database.types';
 
-//データ読み込み
-const { data: m_golfPlaces } = await useAsyncData(async () => {
-  const { data } = await supabase.from('m_golfPlaces').select('*');
-  return data;
-});
+const supabase = useSupabaseClient<Database>();
+const golfPlaceName = 'つくばゴルフ場';
 
 const playData = reactive({
   scoreNumber: 0,
   puttsNumber: 0,
 });
+
+//ホール選択（クリック）とパー表示
+const currentHole = ref<number>(1);
+const par = ref<number>(0);
+  const fetchPar = async (hole: number) => {
+  const { data, error } = await supabase
+    .from('m_golfPlaces')
+    .select(`par_${hole}H`)
+    .eq('golfPlaceName', golfPlaceName)
+    .single();
+  if (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  } else {
+    return data ? data[`par_${hole}H`]: null;
+  }
+};
+const { data: golfPlaces, refresh } = await useAsyncData(async () => {
+  return fetchPar(currentHole.value);
+}, {
+  immediate: true
+});
+watch(currentHole, async (newHole) => {
+  par.value = await fetchPar(newHole);
+  refresh();
+});
+const updateCurrentHole = (hole:number) =>{
+  currentHole.value = hole;
+};
 
 //データ挿入
 const addPlayData = async () => {
@@ -86,9 +112,9 @@ const addPlayData = async () => {
   }
 };
 
-//ホール選択
-const items = Array.from({ length: 18 }, (_, i) => i + 1);
-const currentCardIndex = ref(5);
+//ホール選択（スライド）
+const items:number[] = Array.from({ length: 18 }, (_, i) => i + 1);
+const currentCardIndex = ref<number>(5);
 
 const moveLeft = () =>{
   currentCardIndex.value -= 5;
@@ -182,6 +208,7 @@ align-items: center;
 border: 1px solid #000;
 background: #FFF;
 box-shadow: 2px 2px 16px 0px rgba(0, 0, 0, 0.25);
+cursor: pointer;
 }
 .SIleftButton{
   width: 48px;
