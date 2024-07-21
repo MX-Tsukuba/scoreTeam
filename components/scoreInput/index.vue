@@ -1,5 +1,4 @@
 <template>
-  <EnterGolfCourseName />
   <section class="scoreInputWhole">
     <div class="SIshowHole">      
       <p>{{ golfPlaceName }}</p>
@@ -56,12 +55,14 @@
     <div>
       <p class="SInum addBtn" @click="addPlayData">addData</p>
     </div>
+    <div class="circleBtn">
+      <NuxtLink to="../camera/video" class="circleBtnContent">Camera</NuxtLink>
+    </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import EnterGolfCourseName from './enterGolfCourseName.vue';
 import { ref, reactive, watch } from 'vue';
 import type { Database } from '~/types/database.types';
 
@@ -147,8 +148,6 @@ const selectNumber = ()=> {
 
 <style scoped>
 .scoreInputWhole{
-  margin: -8px;
-  padding: 32px 0 80px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -292,5 +291,9 @@ cursor: pointer;
   }
 .addBtn{
   justify-content: center;
+}
+.circleBtnContent{
+  font-size: 16px;
+  line-height: 64px;
 }
 </style>
