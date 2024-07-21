@@ -2,6 +2,23 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+## スマホで動作確認
+env: コメント解除して起動
+```
+NUXT_HOST=0.0.0.0
+NUXT_PORT=3000
+```
+それでも上手くいかない場合...
+①PCのファイアウォール一次解除
+②package.jsonを変更
+```
+"scripts": {
+  "dev": "nuxi dev",
+  "build": "nuxi build",
+  "start": "eval $(grep '^NUXT_HOST' .env) $(grep '^NUXT_PORT' .env) node .output/server/index.mjs"
+}
+```
+
 ## Setup
 
 Make sure to install the dependencies:
