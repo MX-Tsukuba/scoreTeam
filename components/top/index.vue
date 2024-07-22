@@ -10,8 +10,8 @@
       <p>マッスルデータとスコアデータとの関連分析結果表示エリア
       </p>
     </div>
-    <div class="addData">
-      <NuxtLink to="../scoreInput" class="addDataPlus">+</NuxtLink>
+    <div class="circleBtn">
+      <NuxtLink to="../scoreInput" class="circleBtnContent">+</NuxtLink>
     </div>
   </section>
 
@@ -28,7 +28,6 @@ const toggleDetail = () => {
 <style scoped>
 
 .wholeHome {
-  margin: -8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +37,6 @@ const toggleDetail = () => {
 .homeRecentRecord {
   width: 350px;
   height: 200px;
-  margin-top: 92px;
   padding-top: 24px;
   display: flex;
   flex-direction: column;
@@ -89,24 +87,5 @@ const toggleDetail = () => {
 
 .toggleDetail.isInactive{
   display: none;
-}
-
-.addData {
-  width: 64px;
-  height: 64px;
-  text-align: center;
-  border-radius: 32px;
-  background: #FFF;
-  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.10);
-  position: fixed;
-  right: 8px;
-  bottom: 104px;
-}
-
-.addDataPlus {
-  text-decoration: none;
-  color: #DF0000;
-  font-size: 64px;
-  line-height: 100%;
 }
 </style>

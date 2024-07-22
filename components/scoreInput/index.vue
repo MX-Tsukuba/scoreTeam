@@ -1,5 +1,4 @@
 <template>
-  <EnterGolfCourseName />
   <section class="scoreInputWhole">
     <div class="SIshowHole">      
       <p>{{ golfPlaceName }}</p>
@@ -37,12 +36,14 @@
     <div>
       <p class="SInum addBtn" @click="addPlayData">addData</p>
     </div>
+    <div class="circleBtn">
+      <NuxtLink to="../camera/video" class="circleBtnContent">Camera</NuxtLink>
+    </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import EnterGolfCourseName from './enterGolfCourseName.vue';
 import { ref, reactive, watch } from 'vue';
 import type { Database } from '~/types/database.types';
 
@@ -57,7 +58,7 @@ const playData = reactive({
 //ホール選択（クリック）とパー表示
 const currentHole = ref<number>(1);
 const par = ref<number>(0);
-  const fetchPar = async (hole: number) => {
+const fetchPar = async (hole: number) => {
   const { data, error } = await supabase
     .from('m_golfPlaces')
     .select(`par_${hole}H`)
@@ -76,7 +77,7 @@ const { data: golfPlaces, refresh } = await useAsyncData(async () => {
   immediate: true
 });
 watch(currentHole, async (newHole) => {
-  par.value = await fetchPar(newHole);
+  par.value= await fetchPar(newHole);
   refresh();
 });
 const updateCurrentHole = (hole:number) =>{
@@ -120,8 +121,6 @@ const isItemVisible = (index:number)=> {
 
 <style scoped>
 .scoreInputWhole{
-  margin: -8px;
-  padding: 32px 0 80px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -247,5 +246,9 @@ gap: 64px;
 }
 .addBtn{
   justify-content: center;
+}
+.circleBtnContent{
+  font-size: 16px;
+  line-height: 64px;
 }
 </style>

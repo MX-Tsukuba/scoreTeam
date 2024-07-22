@@ -51,7 +51,6 @@ const deletePlayData = async(tableId: number)=> {
 
 <style scoped>
 .wholeScoreDisplay {
-  margin: -8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,7 +58,7 @@ const deletePlayData = async(tableId: number)=> {
 }
 
 .logScoreDisplay {
-  margin-top: 92px;
+  margin-top: 40px;
   padding: 24px 0;
   display: flex;
   flex-direction: column;
