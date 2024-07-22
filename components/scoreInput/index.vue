@@ -28,11 +28,11 @@
       <div>
         <p class="scoreScore">パット数</p>
         <div>
-          <input type="number" pattern="\d*" class="SInum" v-model="playData.scoreNumber">
+          <input type="number" pattern="\d*" class="SInum" v-model="playData.puttsNumber">
           <img>
         </div>
       </div>
-    </div>     
+      </div>
     <div>
       <p class="SInum addBtn" @click="addPlayData">addData</p>
     </div>
