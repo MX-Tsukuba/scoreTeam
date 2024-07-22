@@ -21,37 +21,18 @@
         <div>
         <p class="scoreScore">スコア</p>
         <div>
-          <input type="number" class="SInum" v-model="playData.scoreNumber">
+          <input type="number" pattern="\d*" class="SInum" v-model="playData.scoreNumber">
           <img>
         </div>
       </div>
       <div>
         <p class="scoreScore">パット数</p>
         <div>
-          <input type="number"  class="SInum" v-model="playData.puttsNumber">
+          <input type="number" pattern="\d*" class="SInum" v-model="playData.scoreNumber">
           <img>
         </div>
       </div>
-      </div>      
-      <div class="SInumberPlate">
-        <div class="SInumbers">
-          <p @click="selectNumber">1</p>
-          <p @click="selectNumber">2</p>
-          <p @click="selectNumber">3</p>
-        </div>
-        <div class="SInumbers">
-          <p @click="selectNumber">4</p>
-          <p @click="selectNumber">5</p>
-          <p @click="selectNumber">6</p>
-        </div>
-        <div class="SInumbers">
-          <p @click="selectNumber">7</p>
-          <p @click="selectNumber">8</p>
-          <p @click="selectNumber">9</p>
-        </div>
-        <p class="SInumbers" @click="selectNumber">0</p>
-      </div>
-
+    </div>     
     <div>
       <p class="SInum addBtn" @click="addPlayData">addData</p>
     </div>
@@ -77,7 +58,7 @@ const playData = reactive({
 //ホール選択（クリック）とパー表示
 const currentHole = ref<number>(1);
 const par = ref<number>(0);
-  const fetchPar = async (hole: number) => {
+const fetchPar = async (hole: number) => {
   const { data, error } = await supabase
     .from('m_golfPlaces')
     .select(`par_${hole}H`)
@@ -96,7 +77,7 @@ const { data: golfPlaces, refresh } = await useAsyncData(async () => {
   immediate: true
 });
 watch(currentHole, async (newHole) => {
-  par.value = await fetchPar(newHole);
+  par.value= await fetchPar(newHole);
   refresh();
 });
 const updateCurrentHole = (hole:number) =>{
@@ -136,14 +117,6 @@ const isItemVisible = (index:number)=> {
   const end = Math.min(items.length, currentCardIndex.value);
   return index >= start && index < end;
 }
-
-//値選択
-const selectNumber = ()=> {
-  document.querySelector(".SInumberPlate")?.querySelectorAll("p").forEach((event)=>{
-    const clickedText = event.textContent;
-    playData.scoreNumber = Number(clickedText);
-  });
-};
 </script>
 
 <style scoped>
@@ -271,24 +244,6 @@ gap: 64px;
 .scoreScore{
   text-align: center; 
 }
-.SInumberPlate{
-  display: flex;
-  flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-gap: 64px;
-padding: 64px;
-border-radius: 8px;
-background: rgba(51, 51, 51, 0.03);
-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.2);
-}
-.SInumbers{
-  display: flex;
-  flex-direction: row;
-  gap: 64px;
-  margin: 0 auto;
-cursor: pointer;
-  }
 .addBtn{
   justify-content: center;
 }
