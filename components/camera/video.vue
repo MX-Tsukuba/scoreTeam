@@ -6,8 +6,17 @@
       <button @click="captureImage">写真を撮影</button>
       <button @click="startRecording" :disabled="isRecording">動画を開始</button>
       <button @click="stopRecording" :disabled="!isRecording">動画を停止</button>
+      <button @click="downloadVideo" :disabled="!videoSrc">動画を保存</button>
+    <!--------->
+      <input type = "file" accept = "video/*" @change="onFileChange"/>
     </div>
-    
+
+    <div v-if="videoSrc2">
+      <video controls>
+        <source :src="videoSrc2" type="video/mp4">
+      </video>
+    </div>
+
     <div v-if="imageSrc">
       <h2>撮影した画像</h2>
       <img :src="imageSrc" alt="Captured Image" />
@@ -26,6 +35,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const video = ref<HTMLVideoElement | null>(null)
 const imageSrc = ref<string | null>(null)
 const videoSrc = ref<string | null>(null)
+const videoSrc2 = ref<string | null>(null)
 const mediaRecorder = ref<MediaRecorder | null>(null)
 const recordedChunks: Blob[] = []
 const isRecording = ref(false)
@@ -66,7 +76,7 @@ const startRecording = () => {
       }
     }
     mediaRecorder.value.onstop = () => {
-      const blob = new Blob(recordedChunks, { type: 'video/webm' })
+      const blob = new Blob(recordedChunks, { type: 'video/mp4' })
       videoSrc.value = URL.createObjectURL(blob)
       recordedChunks.length = 0
     }
@@ -81,6 +91,25 @@ const stopRecording = () => {
     isRecording.value = false
   }
 }
+
+const downloadVideo = () => {
+  if (videoSrc.value) {
+    const a = document.createElement('a')
+    a.href = videoSrc.value
+    a.download = 'recorded_video.mp4'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+}
+
+const onFileChange = (event: Event) =>{
+  const input = event.target as HTMLInputElement;
+  if(input.files && input.files[0]){
+    const file = input.files[0];
+    videoSrc.value = URL.createObjectURL(file);
+  }
+} 
 
 onMounted(() => {
   startCamera()
