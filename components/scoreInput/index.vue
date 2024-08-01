@@ -51,6 +51,7 @@ const supabase = useSupabaseClient<Database>();
 const golfPlaceName = 'つくばゴルフ場';
 
 const playData = reactive({
+  holeNumber: 0,
   scoreNumber: 0,
   puttsNumber: 0,
 });
@@ -86,6 +87,7 @@ const updateCurrentHole = (hole:number) =>{
 
 //データ挿入
 const addPlayData = async () => {
+  playData.holeNumber = currentHole.value;
   const { error } = await supabase.from('t_holes').insert(playData);
   if (error) {
     alert(error.message);
