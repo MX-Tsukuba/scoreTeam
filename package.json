@@ -18,10 +18,5 @@
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^1.2.1"
-  },
-  "scripts": {
-  "dev": "nuxi dev",
-  "build": "nuxi build",
-  "start": "eval $(grep '^NUXT_HOST' .env) $(grep '^NUXT_PORT' .env) node .output/server/index.mjs"
-}
+  }
 }
