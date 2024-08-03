@@ -7,23 +7,18 @@
       <button @click="startRecording" :disabled="isRecording">動画を開始</button>
       <button @click="stopRecording" :disabled="!isRecording">動画を停止</button>
       <button @click="downloadVideo" :disabled="!videoSrc">動画を保存</button>
+      <button @click="downloadImage" :disabled="!videoSrc">写真を保存</button>
     <!--------->
       <input type = "file" accept = "video/*" @change="onFileChange"/>
     </div>
 
-    <div v-if="videoSrc2">
-      <video controls>
-        <source :src="videoSrc2" type="video/mp4">
-      </video>
-    </div>
-
     <div v-if="imageSrc">
-      <h2>撮影した画像</h2>
+      <h2>撮影した画像orアプロードした画像</h2>
       <img :src="imageSrc" alt="Captured Image" />
     </div>
 
     <div v-if="videoSrc">
-      <h2>撮影した動画</h2>
+      <h2>撮影した動画orアップロードした動画</h2>
       <video :src="videoSrc" controls></video>
     </div>
   </div>
@@ -97,6 +92,17 @@ const downloadVideo = () => {
     const a = document.createElement('a')
     a.href = videoSrc.value
     a.download = 'recorded_video.mp4'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+}
+
+const downloadImage = () =>{
+  if(imageSrc.value){
+    const a = document.createElement('a')
+    a.href = imageSrc.value
+    a.download = 'recoad_image.png'
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
