@@ -2,9 +2,11 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [`@nuxtjs/supabase`],
+
   supabase:{
     redirect:false
   },
+
   hooks:{
     'pages:extend'(pages){
       pages.push({
@@ -13,5 +15,7 @@ export default defineNuxtConfig({
         file: '~/pages/top/index.vue',
       })
     }
-  }
+  },
+
+  compatibilityDate: '2024-08-09'
 })
