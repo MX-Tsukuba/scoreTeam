@@ -15,5 +15,7 @@ export default defineNuxtConfig({
         file: '~/pages/top/index.vue',
       })
     }
-  }
+  },
+
+  compatibilityDate: '2024-08-13'
 })
