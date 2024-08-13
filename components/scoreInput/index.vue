@@ -57,8 +57,9 @@ const playData = reactive({
 });
 
 //ホール選択（クリック）とパー表示
+const offset: number = 3;
 const currentHole = ref<number>(1);
-const par = ref<number>(0);
+const par = ref<number|null>(0);
 const fetchPar = async (hole: number) => {
   const { data, error } = await supabase
     .from('m_golfPlaces')
@@ -69,7 +70,7 @@ const fetchPar = async (hole: number) => {
     console.error('Error fetching data:', error);
     return null;
   } else {
-    return data ? data[`par_${hole}H`]: null;
+    return data ? data[hole+offset]: null;
   }
 };
 const { data: golfPlaces, refresh } = await useAsyncData(async () => {
@@ -78,7 +79,7 @@ const { data: golfPlaces, refresh } = await useAsyncData(async () => {
   immediate: true
 });
 watch(currentHole, async (newHole) => {
-  par.value= await fetchPar(newHole);
+  par.value= await Number(fetchPar(newHole));
   refresh();
 });
 const updateCurrentHole = (hole:number) =>{
