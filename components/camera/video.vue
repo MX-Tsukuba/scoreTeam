@@ -30,7 +30,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const video = ref<HTMLVideoElement | null>(null)
 const imageSrc = ref<string | null>(null)
 const videoSrc = ref<string | null>(null)
-const videoSrc2 = ref<string | null>(null)
 const mediaRecorder = ref<MediaRecorder | null>(null)
 const recordedChunks: Blob[] = []
 const isRecording = ref(false)
