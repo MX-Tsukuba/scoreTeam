@@ -10,6 +10,7 @@
       <button @click="downloadImage" :disabled="!videoSrc">写真を保存</button>
     <!--------->
       <input type = "file" accept = "video/*" @change="onFileChange"/>
+      <input type = "file" accept = "video/*" @change="upLoadSupabaseStorage">
     </div>
 
     <div v-if="imageSrc">
@@ -26,6 +27,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useSupabaseClient } from '#imports';
 
 const video = ref<HTMLVideoElement | null>(null)
 const imageSrc = ref<string | null>(null)
@@ -115,6 +117,17 @@ const onFileChange = (event: Event) =>{
     videoSrc.value = URL.createObjectURL(file);
   }
 } 
+
+const upLoadSupabaseStorage= async(event: Event)=>{
+  const input = event.target as HTMLInputElement;
+  if(input.files && input.files[0]){
+    const file = input.files[0];
+    const{data, error} = await useSupabaseClient().storage.from('Movie').upload('test/test.mp4', file);
+    if(error){
+      console.log(error);
+    }
+  }
+}
 
 onMounted(() => {
   startCamera()
